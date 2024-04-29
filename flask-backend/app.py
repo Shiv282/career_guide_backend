@@ -7,7 +7,6 @@ import matplotlib.pyplot as plt
 import pickle 
 import time
 from db import *
-import joblib
 from keras.models import load_model
 import re
 from keras.preprocessing.sequence import pad_sequences

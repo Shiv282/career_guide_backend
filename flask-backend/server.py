@@ -27,8 +27,14 @@ def vak():
     data = request.json 
     print(data["data"]) 
     result = vak_predict(data["data"])
-    response = [result[0][0],np.float64(result[0][1])]
-    return jsonify(response)
+    #response = [result[0][0],np.float64(result[0][1])]
+    output = []
+    for x in result:
+        temp=[]
+        temp.append(x[0])
+        temp.append(np.float64(x[1]))
+        output.append(temp)
+    return (output)
 
 if __name__ == '__main__':
     app.run(debug=True)

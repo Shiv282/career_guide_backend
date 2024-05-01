@@ -353,15 +353,20 @@ def vak_predict(sentences):
    
    output = []
    for sentence in sentences:
-    temp = []
     print(sentence)
-    sentence = clean(sentence)
-    sentence = tokenizer.texts_to_sequences([sentence])
-    sentence = pad_sequences(sentence, maxlen=48, truncating='pre')
-    result = le.inverse_transform(np.argmax(model.predict(sentence), axis=-1))[0]
-    proba =  np.max(model.predict(sentence))
-    print(f"{result} : {proba}\n\n")
-    temp.append(result)
-    temp.append(proba)
-    output.append(temp)
+    cleaned_sentence = clean(sentence)
+    tokenized_sentence = tokenizer.texts_to_sequences([cleaned_sentence])
+    padded_sentence = pad_sequences(tokenized_sentence, maxlen=48, truncating='pre')
+    probabilities = model.predict(padded_sentence)[0]
+    results = le.classes_
+    for result, prob in zip(results, probabilities):
+        print(f"{result}: {prob}")
+        temp = []
+        temp.append(result)
+        temp.append(prob)
+        output.append(temp)
+    print("\n")
+    #temp.append(result)
+    #temp.append(proba)
+    #output.append(temp)
    return output
